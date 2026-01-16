@@ -18,6 +18,9 @@ export function initViewport({ container, onResize }) {
 
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
+  controls.target.set(0, 0.5, 0);
+  controls.update();
+  controls.saveState();
 
   window.addEventListener("resize", onResize);
   onResize();

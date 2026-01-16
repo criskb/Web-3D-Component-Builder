@@ -30,3 +30,21 @@ export function addPrimitive(scene, state, { type }) {
   state.addComponent(component);
   return component;
 }
+
+export function clearComponents(scene, state) {
+  state.components.forEach((component) => {
+    scene.remove(component.mesh);
+  });
+  state.clearComponents();
+}
+
+export function setSelection(components, selectedId) {
+  components.forEach((component) => {
+    const material = component.mesh.material;
+    if (material && "emissive" in material) {
+      material.emissive.set(
+        component.id === selectedId ? "#2f6bff" : "#000000"
+      );
+    }
+  });
+}

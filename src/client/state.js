@@ -1,6 +1,7 @@
 export function createState() {
   const listeners = new Map();
   const components = [];
+  let selectedId = null;
 
   function on(event, handler) {
     if (!listeners.has(event)) {
@@ -21,10 +22,26 @@ export function createState() {
     emit("add", component);
   }
 
+  function clearComponents() {
+    components.length = 0;
+    selectedId = null;
+    emit("clear");
+  }
+
+  function selectComponent(id) {
+    selectedId = id;
+    emit("select", id);
+  }
+
   return {
     on,
     emit,
     addComponent,
+    clearComponents,
+    selectComponent,
     components,
+    get selectedId() {
+      return selectedId;
+    },
   };
 }

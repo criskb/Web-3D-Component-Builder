@@ -5,13 +5,20 @@ if (typeof document === "undefined") {
 }
 import { initViewport, resizeViewport } from "./client/viewport.js";
 import { initScene } from "./client/scene.js";
-import { addPrimitive } from "./client/components.js";
+import {
+  addPrimitive,
+  clearComponents,
+  setSelection,
+} from "./client/components.js";
+import { exportImage } from "./client/export.js";
+import { initInspector } from "./client/inspector.js";
 import { createState } from "./client/state.js";
-import { initUI } from "./client/ui.js";
+import { initUI, setStatus } from "./client/ui.js";
 
 const viewportElement = document.querySelector("#viewport");
 const inspectorElement = document.querySelector("#inspector");
 const toolbarElement = document.querySelector("#toolbar");
+const statusElement = document.querySelector("#status");
 
 const state = createState();
 const { scene } = initScene();
@@ -20,19 +27,44 @@ const { renderer, camera, controls } = initViewport({
   onResize: () => resizeViewport(renderer, camera, viewportElement),
 });
 
+initInspector({
+  container: inspectorElement,
+  state,
+  onSelect: (id) => {
+    state.selectComponent(id);
+    setSelection(state.components, state.selectedId);
+    setStatus(statusElement, "Selection updated.");
+  },
+});
+
 state.on("add", (item) => {
-  inspectorElement.innerHTML = "";
-  const entry = document.createElement("div");
-  entry.className = "inspector-item";
-  entry.innerHTML = `<strong>${item.name}</strong><span>${item.type}</span>`;
-  inspectorElement.appendChild(entry);
+  state.selectComponent(item.id);
+  setSelection(state.components, state.selectedId);
+  setStatus(statusElement, `Added ${item.name}.`);
+});
+
+state.on("clear", () => {
+  setSelection(state.components, state.selectedId);
+  setStatus(statusElement, "Scene cleared.");
 });
 
 initUI({
   toolbarElement,
   onAddBox: () => addPrimitive(scene, state, { type: "box" }),
   onAddSphere: () => addPrimitive(scene, state, { type: "sphere" }),
+  onClear: () => clearComponents(scene, state),
+  onResetView: () => controls.reset(),
+  onSnapshot: () => {
+    const dataUrl = exportImage(renderer, scene, camera);
+    const link = document.createElement("a");
+    link.href = dataUrl;
+    link.download = "scene-snapshot.png";
+    link.click();
+    setStatus(statusElement, "Snapshot saved.");
+  },
 });
+
+setStatus(statusElement, "Ready.");
 
 scene.add(camera);
 
