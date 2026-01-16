@@ -1,8 +1,13 @@
 import * as THREE from "three";
 import { getMaterial } from "./materials.js";
 
+function randomColor() {
+  const hues = ["#5b8cff", "#8b5bff", "#ff7b5b", "#35c98b", "#ffd05b"];
+  return hues[Math.floor(Math.random() * hues.length)];
+}
+
 export function addPrimitive(scene, state, { type }) {
-  const material = getMaterial("standard");
+  const material = getMaterial("standard", { color: randomColor() });
   let geometry;
   let name;
 
@@ -45,6 +50,7 @@ export function setSelection(components, selectedId) {
       material.emissive.set(
         component.id === selectedId ? "#2f6bff" : "#000000"
       );
+      material.emissiveIntensity = component.id === selectedId ? 0.6 : 0;
     }
   });
 }

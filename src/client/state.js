@@ -33,12 +33,18 @@ export function createState() {
     emit("select", id);
   }
 
+  function selectNone() {
+    selectedId = null;
+    emit("select", null);
+  }
+
   return {
     on,
     emit,
     addComponent,
     clearComponents,
     selectComponent,
+    selectNone,
     components,
     get selectedId() {
       return selectedId;

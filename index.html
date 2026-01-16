@@ -11,7 +11,7 @@
       <header class="app-header">
         <h1>3D Component Builder</h1>
         <div class="toolbar" id="toolbar">
-          <div class="toolbar-group">
+          <div class="toolbar-group" aria-label="Create">
             <button class="toolbar-button toolbar-button--default" type="button">
               Add Box
             </button>
@@ -19,7 +19,18 @@
               Add Sphere
             </button>
           </div>
-          <div class="toolbar-group">
+          <div class="toolbar-group" aria-label="Transform">
+            <button class="toolbar-button toolbar-button--ghost" type="button">
+              Grab
+            </button>
+            <button class="toolbar-button toolbar-button--ghost" type="button">
+              Rotate
+            </button>
+            <button class="toolbar-button toolbar-button--ghost" type="button">
+              Scale
+            </button>
+          </div>
+          <div class="toolbar-group" aria-label="Scene">
             <button class="toolbar-button toolbar-button--ghost" type="button">
               Reset View
             </button>

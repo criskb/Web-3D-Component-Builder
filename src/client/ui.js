@@ -11,6 +11,9 @@ export function initUI({
   toolbarElement,
   onAddBox,
   onAddSphere,
+  onGrab,
+  onRotate,
+  onScale,
   onClear,
   onResetView,
   onSnapshot,
@@ -21,6 +24,16 @@ export function initUI({
   leftGroup.appendChild(createButton("Add Box", onAddBox));
   leftGroup.appendChild(createButton("Add Sphere", onAddSphere));
 
+  const transformGroup = document.createElement("div");
+  transformGroup.className = "toolbar-group";
+  const grabButton = createButton("Grab", onGrab, "ghost");
+  const rotateButton = createButton("Rotate", onRotate, "ghost");
+  const scaleButton = createButton("Scale", onScale, "ghost");
+  [grabButton, rotateButton, scaleButton].forEach((button) => {
+    button.dataset.mode = button.textContent.toLowerCase();
+    transformGroup.appendChild(button);
+  });
+
   const rightGroup = document.createElement("div");
   rightGroup.className = "toolbar-group";
   rightGroup.appendChild(createButton("Reset View", onResetView, "ghost"));
@@ -28,6 +41,7 @@ export function initUI({
   rightGroup.appendChild(createButton("Clear Scene", onClear, "danger"));
 
   toolbarElement.appendChild(leftGroup);
+  toolbarElement.appendChild(transformGroup);
   toolbarElement.appendChild(rightGroup);
 }
 
@@ -36,4 +50,19 @@ export function setStatus(statusElement, message) {
     return;
   }
   statusElement.textContent = message;
+}
+
+export function setActiveTransform(toolbarElement, mode) {
+  if (!toolbarElement) {
+    return;
+  }
+  toolbarElement
+    .querySelectorAll("[data-mode]")
+    .forEach((button) => button.classList.remove("is-active"));
+  if (mode) {
+    const active = toolbarElement.querySelector(`[data-mode="${mode}"]`);
+    if (active) {
+      active.classList.add("is-active");
+    }
+  }
 }

@@ -6,6 +6,7 @@ export function initViewport({ container, onResize }) {
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(container.clientWidth, container.clientHeight);
   renderer.setClearColor("#0c0f16", 1);
+  renderer.shadowMap.enabled = true;
   container.appendChild(renderer.domElement);
 
   const camera = new THREE.PerspectiveCamera(
