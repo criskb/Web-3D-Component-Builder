@@ -25,6 +25,10 @@ const viewportOverlay = document.querySelector("#viewport-overlay");
 
 const state = createState();
 const { scene } = initScene();
+if (!viewportElement) {
+  throw new Error("Viewport container missing.");
+}
+
 const { renderer, camera, controls } = initViewport({
   container: viewportElement,
   onResize: () => resizeViewport(renderer, camera, viewportElement),
@@ -114,6 +118,10 @@ setStatus(statusElement, "Ready.");
 setActiveTransform(toolbarElement, "grab");
 if (viewportOverlay) {
   viewportOverlay.classList.add("is-hidden");
+}
+
+if (state.components.length === 0) {
+  addPrimitive(scene, state, { type: "box" });
 }
 
 window.addEventListener("keydown", (event) => {

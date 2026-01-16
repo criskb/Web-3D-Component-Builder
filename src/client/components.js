@@ -6,6 +6,13 @@ function randomColor() {
   return hues[Math.floor(Math.random() * hues.length)];
 }
 
+function generateId() {
+  if (typeof crypto !== "undefined" && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+  return `component-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+}
+
 export function addPrimitive(scene, state, { type }) {
   const material = getMaterial("standard", { color: randomColor() });
   let geometry;
@@ -26,7 +33,7 @@ export function addPrimitive(scene, state, { type }) {
   scene.add(mesh);
 
   const component = {
-    id: crypto.randomUUID(),
+    id: generateId(),
     name,
     type,
     mesh,
