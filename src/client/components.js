@@ -50,6 +50,15 @@ export function clearComponents(scene, state) {
   state.clearComponents();
 }
 
+export function removeComponent(scene, state, id) {
+  const component = state.components.find((item) => item.id === id);
+  if (!component) {
+    return;
+  }
+  scene.remove(component.mesh);
+  state.removeComponent(id);
+}
+
 export function setSelection(components, selectedId) {
   components.forEach((component) => {
     const material = component.mesh.material;

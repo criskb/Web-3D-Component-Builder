@@ -38,6 +38,19 @@ export function createState() {
     emit("select", null);
   }
 
+  function removeComponent(id) {
+    const index = components.findIndex((component) => component.id === id);
+    if (index === -1) {
+      return;
+    }
+    components.splice(index, 1);
+    if (selectedId === id) {
+      selectedId = null;
+      emit("select", null);
+    }
+    emit("remove", id);
+  }
+
   return {
     on,
     emit,
@@ -45,6 +58,7 @@ export function createState() {
     clearComponents,
     selectComponent,
     selectNone,
+    removeComponent,
     components,
     get selectedId() {
       return selectedId;

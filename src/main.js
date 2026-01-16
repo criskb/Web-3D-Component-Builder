@@ -8,6 +8,7 @@ import { initScene } from "./client/scene.js";
 import {
   addPrimitive,
   clearComponents,
+  removeComponent,
   setSelection,
 } from "./client/components.js";
 import { exportImage } from "./client/export.js";
@@ -46,7 +47,7 @@ initSelection({
   state,
 });
 
-initInspector({
+const inspector = initInspector({
   container: inspectorElement,
   state,
   onSelect: (id) => {
@@ -131,6 +132,26 @@ window.addEventListener("keydown", (event) => {
     setSelection(state.components, state.selectedId);
     setStatus(statusElement, "Selection cleared.");
   }
+  if (event.key.toLowerCase() === "g") {
+    transform.setMode("translate");
+    setActiveTransform(toolbarElement, "grab");
+  }
+  if (event.key.toLowerCase() === "r") {
+    transform.setMode("rotate");
+    setActiveTransform(toolbarElement, "rotate");
+  }
+  if (event.key.toLowerCase() === "s") {
+    transform.setMode("scale");
+    setActiveTransform(toolbarElement, "scale");
+  }
+  if (event.key === "Delete" || event.key === "Backspace") {
+    if (state.selectedId) {
+      removeComponent(scene, state, state.selectedId);
+      transform.detach();
+      setSelection(state.components, state.selectedId);
+      setStatus(statusElement, "Component removed.");
+    }
+  }
 });
 
 scene.add(camera);
@@ -138,6 +159,14 @@ scene.add(camera);
 function animate() {
   requestAnimationFrame(animate);
   controls.update();
+  if (state.selectedId) {
+    const selected = state.components.find(
+      (component) => component.id === state.selectedId
+    );
+    if (selected) {
+      inspector.updateDetails(selected);
+    }
+  }
   renderer.render(scene, camera);
 }
 
