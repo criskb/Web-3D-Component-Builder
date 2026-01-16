@@ -1,4 +1,8 @@
-import "./style.css";
+if (typeof document === "undefined") {
+  throw new Error(
+    "This entry is meant for the browser. Use `npm run dev` to start the app."
+  );
+}
 import { initViewport, resizeViewport } from "./client/viewport.js";
 import { initScene } from "./client/scene.js";
 import { addPrimitive } from "./client/components.js";
