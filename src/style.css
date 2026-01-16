@@ -95,6 +95,33 @@ body {
   height: calc(100vh - 74px);
 }
 
+.viewport-overlay {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  padding: 16px 18px;
+  border-radius: 10px;
+  background: rgba(17, 20, 27, 0.9);
+  border: 1px solid #1f2330;
+  max-width: 260px;
+  pointer-events: none;
+}
+
+.viewport-overlay h2 {
+  margin: 0 0 6px;
+  font-size: 14px;
+}
+
+.viewport-overlay p {
+  margin: 0;
+  font-size: 12px;
+  color: #9aa3b8;
+}
+
+.viewport-overlay.is-hidden {
+  display: none;
+}
+
 .inspector-panel {
   padding: 16px;
   background: #11141b;

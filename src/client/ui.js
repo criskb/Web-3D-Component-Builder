@@ -15,6 +15,7 @@ export function initUI({
   onResetView,
   onSnapshot,
 }) {
+  toolbarElement.innerHTML = "";
   const leftGroup = document.createElement("div");
   leftGroup.className = "toolbar-group";
   leftGroup.appendChild(createButton("Add Box", onAddBox));

@@ -19,6 +19,7 @@ const viewportElement = document.querySelector("#viewport");
 const inspectorElement = document.querySelector("#inspector");
 const toolbarElement = document.querySelector("#toolbar");
 const statusElement = document.querySelector("#status");
+const viewportOverlay = document.querySelector("#viewport-overlay");
 
 const state = createState();
 const { scene } = initScene();
@@ -65,6 +66,9 @@ initUI({
 });
 
 setStatus(statusElement, "Ready.");
+if (viewportOverlay) {
+  viewportOverlay.classList.add("is-hidden");
+}
 
 scene.add(camera);
 
