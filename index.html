@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3D Component Builder</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="app-header">
+        <h1>3D Component Builder</h1>
+        <div class="toolbar" id="toolbar">
+          <div class="toolbar-group" aria-label="Create">
+            <button class="toolbar-button toolbar-button--default" type="button">
+              Add Box
+            </button>
+            <button class="toolbar-button toolbar-button--default" type="button">
+              Add Sphere
+            </button>
+          </div>
+          <div class="toolbar-group" aria-label="Transform">
+            <button class="toolbar-button toolbar-button--ghost" type="button">
+              Grab
+            </button>
+            <button class="toolbar-button toolbar-button--ghost" type="button">
+              Rotate
+            </button>
+            <button class="toolbar-button toolbar-button--ghost" type="button">
+              Scale
+            </button>
+          </div>
+          <div class="toolbar-group" aria-label="Scene">
+            <button class="toolbar-button toolbar-button--ghost" type="button">
+              Reset View
+            </button>
+            <button class="toolbar-button toolbar-button--ghost" type="button">
+              Snapshot
+            </button>
+            <button class="toolbar-button toolbar-button--danger" type="button">
+              Clear Scene
+            </button>
+          </div>
+        </div>
+        <div class="status" id="status"></div>
+      </header>
+      <main class="app-main">
+        <section class="viewport-panel">
+          <div id="viewport" class="viewport"></div>
+          <div class="viewport-overlay" id="viewport-overlay">
+            <h2>Viewport</h2>
+            <p>Use the toolbar to add a component and orbit the camera.</p>
+          </div>
+        </section>
+        <aside class="inspector-panel">
+          <h2>Inspector</h2>
+          <div id="inspector">
+            <p class="inspector-empty">
+              No components yet. Use the toolbar to add one.
+            </p>
+          </div>
+        </aside>
+      </main>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
